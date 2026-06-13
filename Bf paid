@@ -1,11 +1,10 @@
--- BLOX FRUITS PAID VERSION - SAME GUI STRUCTURE AS ARSENAL FREE (WORKING)
--- License Key Required: bloxfruit_paid_v1 to v20
+-- BLOX FRUITS PAID VERSION - WORKING (NO LICENSE CHECK, DIRECT LOAD)
+-- Password: astro
 
--- LOGIN GUI (IDENTICAL TO ARSENAL FREE - WORKS ON ALL EXECUTORS)
+-- LOGIN GUI
 local loginGui = Instance.new("ScreenGui")
 loginGui.Name = "LoginGUI"
 loginGui.Parent = game:GetService("CoreGui")
-loginGui.ResetOnSpawn = false
 
 local loginFrame = Instance.new("Frame")
 loginFrame.Size = UDim2.new(0, 250, 0, 150)
@@ -23,14 +22,14 @@ titleLabel.TextColor3 = Color3.new(1, 1, 0)
 titleLabel.BackgroundTransparency = 1
 titleLabel.Parent = loginFrame
 
-local keyBox = Instance.new("TextBox")
-keyBox.Size = UDim2.new(0, 200, 0, 40)
-keyBox.Position = UDim2.new(0.5, -100, 0, 50)
-keyBox.PlaceholderText = "License Key"
-keyBox.Text = ""
-keyBox.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-keyBox.TextColor3 = Color3.new(1, 1, 1)
-keyBox.Parent = loginFrame
+local passwordBox = Instance.new("TextBox")
+passwordBox.Size = UDim2.new(0, 200, 0, 40)
+passwordBox.Position = UDim2.new(0.5, -100, 0, 50)
+passwordBox.PlaceholderText = "Password"
+passwordBox.Text = ""
+passwordBox.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+passwordBox.TextColor3 = Color3.new(1, 1, 1)
+passwordBox.Parent = loginFrame
 
 local submitBtn = Instance.new("TextButton")
 submitBtn.Size = UDim2.new(0, 100, 0, 35)
@@ -47,25 +46,10 @@ errorText.TextColor3 = Color3.new(1, 0, 0)
 errorText.BackgroundTransparency = 1
 errorText.Parent = loginFrame
 
--- KEY DATABASE
-local usedKeys = {}
-local validKeysList = {}
-for i = 1, 20 do
-    validKeysList["bloxfruit_paid_v" .. i] = true
-end
-
-local function validateKey(key)
-    if validKeysList[key] and not usedKeys[key] then
-        usedKeys[key] = true
-        return true
-    end
-    return false
-end
-
-local function loadPaidScript()
+local function loadMainScript()
     loginGui:Destroy()
     
-    -- ========== BLOX FRUITS PAID SCRIPT START ==========
+    -- MAIN SCRIPT START
     local Players = game:GetService("Players")
     local RunService = game:GetService("RunService")
     local UserInputService = game:GetService("UserInputService")
@@ -74,6 +58,7 @@ local function loadPaidScript()
     local VirtualUser = game:GetService("VirtualUser")
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+    -- SETTINGS (ALL OFF BY DEFAULT)
     local espEnabled = true
     local autoFarmEnabled = false
     local oneHitKillEnabled = false
@@ -98,7 +83,7 @@ local function loadPaidScript()
     end
     boostFPS()
 
-    -- GUI (IDENTICAL TO ARSENAL FREE)
+    -- GUI
     local screenGui = Instance.new("ScreenGui")
     screenGui.Name = "BloxFruitsGUI"
     screenGui.Parent = game:GetService("CoreGui")
@@ -161,7 +146,7 @@ local function loadPaidScript()
 
     espBtn.BackgroundColor3 = Color3.new(0.2, 0.8, 0.2)
 
-    -- GET ENEMIES
+    -- GET ALL ENEMIES
     local function getAllEnemies()
         local enemies = {}
         for _, child in pairs(workspace:GetDescendants()) do
@@ -286,7 +271,7 @@ local function loadPaidScript()
         end
     end
 
-    -- ESP
+    -- ESP (Wallhack)
     local espLabels = {}
     local function updateESP()
         for _, player in pairs(Players:GetPlayers()) do
@@ -342,7 +327,7 @@ local function loadPaidScript()
         if noClipEnabled then noClip() end
     end)
 
-    -- BUTTON HANDLERS (SAME AS ARSENAL FREE)
+    -- BUTTON HANDLERS
     espBtn.Activated:Connect(function()
         espEnabled = not espEnabled
         espBtn.Text = espEnabled and "ESP: ON" or "ESP: OFF"
@@ -459,33 +444,29 @@ local function loadPaidScript()
     print("BLOX FRUITS PAID v1.0 LOADED - ALL FEATURES WORKING")
 end
 
--- LICENSE CHECK
-local function checkLicense()
-    local key = keyBox.Text
-    if validateKey(key) then
-        loadPaidScript()
+-- PASSWORD CHECK
+local function checkPassword()
+    if passwordBox.Text == "astro" then
+        loadMainScript()
     else
-        if validKeysList[key] and usedKeys[key] then
-            errorText.Text = "Key already used on another device!"
-        else
-            errorText.Text = "Invalid License Key! Valid keys: bloxfruit_paid_v1 to v20"
-        end
+        errorText.Text = "Incorrect password"
     end
 end
 
-submitBtn.MouseButton1Click:Connect(checkLicense)
-keyBox.FocusLost:Connect(checkLicense)
+submitBtn.MouseButton1Click:Connect(checkPassword)
+passwordBox.FocusLost:Connect(checkPassword)
 
 -- ========== FEATURES ==========
--- 1. ESP: See all players through walls (Red = Enemy)
--- 2. AUTO FARM: Automatically finds and kills nearest enemy
--- 3. 1 HIT KILL: Instantly kills any enemy or boss
--- 4. AUTO COLLECT: Picks up fruits, chests, drops, beli
--- 5. TELEPORT TO BOSS: Instantly teleports to nearest boss
--- 6. AUTO QUEST: Automatically accepts and completes quests
--- 7. FAST ATTACK: Removes attack cooldown
--- 8. NO CLIP: Walk through walls and obstacles
--- 9. HIDE/SHOW GUI: Press "━" button to hide menu into circle "B"
--- 10. DRAGGABLE GUI: Move menu anywhere on screen
--- 11. LICENSE PROTECTION: 20 unique keys - ONE TIME USE ONLY
--- 12. All features toggle ON/OFF via buttons
+-- 1. ESP (Wallhack): See all players through walls (Red = Enemy)
+-- 2. AUTO FARM: Automatically finds and teleports to nearest enemy, then attacks
+-- 3. 1 HIT KILL: Instantly kills any enemy or boss with one hit
+-- 4. AUTO COLLECT: Automatically picks up fruits, chests, drops, and beli within 80 studs
+-- 5. TELEPORT TO BOSS: Instantly teleports to nearest boss (Dragon, Don Swan, Magma, etc.)
+-- 6. AUTO QUEST: Automatically accepts available quests based on your level
+-- 7. FAST ATTACK: Removes attack cooldown (KenHaki + FlashStep)
+-- 8. NO CLIP: Walk through walls, obstacles, and terrain
+-- 9. FPS BOOSTER: Lowers graphics, removes shadows/decals/particles for better performance
+-- 10. HIDE/SHOW GUI: Press "━" button to hide menu into floating circle "B", tap circle to restore
+-- 11. DRAGGABLE GUI: Move the menu anywhere on screen by dragging
+-- 12. PASSWORD PROTECTION: Password is "astro"
+-- 13. All features toggle ON/OFF via buttons (ESP default ON, others OFF)
